@@ -7,6 +7,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
@@ -24,6 +25,7 @@ func PsqlConnect() (*gorm.DB, error) {
 			SingularTable: true,
 		},
 		SkipDefaultTransaction: true, /// Removed defuault transaction used by GORM to faster the query and execution
+		Logger:                 logger.Default,
 	})
 	if err != nil {
 		log.Printf("Failed to connect to database. Error: %s, conn: %s", err.Error(), dsn)

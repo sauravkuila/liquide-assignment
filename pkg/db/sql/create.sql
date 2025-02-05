@@ -1,6 +1,9 @@
 --drop tables for fresh schema
 DROP TYPE IF EXISTS UserTypes;
 DROP TABLE IF EXISTS user_detail;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS vote;
 
 --create types
 CREATE TYPE UserTypes AS ENUM('USER','ADMIN');
@@ -27,8 +30,53 @@ CREATE TABLE user_detail(
    PRIMARY KEY(id)
 );
 
+CREATE TABLE post (
+    post_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES user_detail(id),
+    content TEXT NOT NULL,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE comment (
+    comment_id SERIAL PRIMARY KEY,
+    post_id INT REFERENCES post(post_id),
+    user_id INT REFERENCES user_detail(id),
+    parent_comment_id INT REFERENCES comment(comment_id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE vote (
+    vote_id SERIAL PRIMARY KEY,
+    post_id INT REFERENCES post(post_id),
+    user_id INT REFERENCES user_detail(id),
+    vote_type BOOLEAN NOT NULL, -- TRUE for upvote, FALSE for downvote
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (post_id, user_id)
+);
+
 -- create a trigger for timestamp
 CREATE TRIGGER set_timestamp
 AFTER UPDATE ON user_detail
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+AFTER UPDATE ON post
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+AFTER UPDATE ON comment
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+AFTER UPDATE ON vote
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();

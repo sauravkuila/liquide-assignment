@@ -2,7 +2,6 @@ package dto
 
 import (
 	"database/sql"
-	"time"
 )
 
 type DbUserDetail struct {
@@ -29,26 +28,11 @@ func (u *DbUserDetail) ToUserDetail() UserDetail {
 	}
 }
 
-type UserDetail struct {
-	UserId       int64
-	UserName     string
-	UserPassword string
-	UserType     string
-	Email        string
-	Mobile       string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-}
-
-func (u *UserDetail) ToDbUserDetail() DbUserDetail {
-	return DbUserDetail{
-		UserId:       sql.NullInt64{Int64: u.UserId, Valid: true},
-		UserName:     sql.NullString{String: u.UserName, Valid: true},
-		UserPassword: sql.NullString{String: u.UserPassword, Valid: true},
-		UserType:     sql.NullString{String: u.UserType, Valid: true},
-		Email:        sql.NullString{String: u.Email, Valid: true},
-		Mobile:       sql.NullString{String: u.Mobile, Valid: true},
-		CreatedAt:    sql.NullTime{Time: u.CreatedAt, Valid: true},
-		UpdatedAt:    sql.NullTime{Time: u.UpdatedAt, Valid: true},
-	}
+type DbPost struct {
+	PostId    sql.NullInt64
+	UserId    sql.NullInt64
+	Content   sql.NullString
+	IsDeleted sql.NullBool
+	CreatedAt sql.NullTime
+	UpdatedAt sql.NullTime
 }

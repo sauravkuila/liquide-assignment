@@ -6,6 +6,10 @@ The assignment covers
 * upvote and post functionalities
 
 There are a few assumptions and borders drawn around the application in the interest of time and scoping. 
+* Posts can only have text and no resources like images or videos in them.
+* only posts can be voted. comments cannot be voted
+* once a post is upvoted, it can only be downvoted by the user. the vote cannot be removed
+* admin can delete any post they want but users can delete only their post 
 
 ## postman-collection
 https://dark-station-154939.postman.co/workspace/Liquide-Assignment~bb764463-0583-4784-8c62-78b3cc1f5fd9/collection/32061457-f46f94fd-310e-4346-a873-1ceae92587bd?action=share&creator=32061457

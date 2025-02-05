@@ -1,7 +1,8 @@
 package dto
 
 import (
-	e "liquide-assignment/pkg/errors"
+	"database/sql"
+	"time"
 )
 
 type UserSignupRequest struct {
@@ -23,10 +24,8 @@ func (obj *UserSignupRequest) ToUserDetails() UserDetail {
 }
 
 type UserSignupResponse struct {
-	Data    *UserSignup `json:"data,omitempty"`
-	Status  bool        `json:"success"`
-	Errors  []e.Error   `json:"errors,omitempty"`
-	Message string      `json:"message,omitempty"`
+	Data *UserSignup `json:"data,omitempty"`
+	CommonResponse
 }
 
 type UserSignup struct {
@@ -40,14 +39,36 @@ type UserLoginRequest struct {
 }
 
 type UserLoginResponse struct {
-	Data    *UserLogin `json:"data,omitempty"`
-	Status  bool       `json:"success"`
-	Errors  []e.Error  `json:"errors,omitempty"`
-	Message string     `json:"message,omitempty"`
+	Data *UserLogin `json:"data,omitempty"`
+	CommonResponse
 }
 
 type UserLogin struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refresh_token"`
 	Expiry       string `json:"expiry"`
+}
+
+type UserDetail struct {
+	UserId       int64
+	UserName     string
+	UserPassword string
+	UserType     string
+	Email        string
+	Mobile       string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+}
+
+func (u *UserDetail) ToDbUserDetail() DbUserDetail {
+	return DbUserDetail{
+		UserId:       sql.NullInt64{Int64: u.UserId, Valid: true},
+		UserName:     sql.NullString{String: u.UserName, Valid: true},
+		UserPassword: sql.NullString{String: u.UserPassword, Valid: true},
+		UserType:     sql.NullString{String: u.UserType, Valid: true},
+		Email:        sql.NullString{String: u.Email, Valid: true},
+		Mobile:       sql.NullString{String: u.Mobile, Valid: true},
+		CreatedAt:    sql.NullTime{Time: u.CreatedAt, Valid: true},
+		UpdatedAt:    sql.NullTime{Time: u.UpdatedAt, Valid: true},
+	}
 }

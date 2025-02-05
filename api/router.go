@@ -26,26 +26,25 @@ func getRouter(obj service.ServiceGroupLayer) *gin.Engine {
 	//v1 APIs
 	v1Group := router.Group("v1")
 	{
-		//enhancement: depending on scale, each group can become a microservice pointing to individual tables or databases if needed
 
 		//post group
 		postGroup := v1Group.Group("post")
 		{
-			postGroup.POST("", obj.GetV1Service().CreatePost)      //create post
-			postGroup.PUT(":id", obj.GetV1Service().EditPost)      //edit a post
-			postGroup.DELETE(":id", obj.GetV1Service().DeletePost) //delete a post
-			postGroup.GET(":id", obj.GetV1Service().GetPost)       //fetch a post info
-			postGroup.GET("", obj.GetV1Service().GetAllPosts)      //fetch all posts
+			postGroup.POST("", obj.GetV1Service().CreatePost)           //create post
+			postGroup.PUT("/:postId", obj.GetV1Service().EditPost)      //edit a post
+			postGroup.DELETE("/:postId", obj.GetV1Service().DeletePost) //delete a post
+			postGroup.GET("/:postId", obj.GetV1Service().GetPost)       //fetch a post info
+			postGroup.GET("", obj.GetV1Service().GetAllPosts)           //fetch all posts
 		}
 
 		//comment group
 		commentGroup := v1Group.Group("comment")
 		{
-			commentGroup.POST("", obj.GetV1Service().CreateComment)       //create comment
-			commentGroup.PUT(":id", obj.GetV1Service().EditComment)       //edit a comment
-			commentGroup.DELETE(":id", obj.GetV1Service().DeleteComment)  //delete a comment
-			commentGroup.GET(":id", obj.GetV1Service().GetComment)        //fetch a comment info
-			commentGroup.GET(":postid", obj.GetV1Service().GetAllComment) //fetch all comments
+			commentGroup.POST("", obj.GetV1Service().CreateComment)              //create comment
+			commentGroup.PUT("/:commentId", obj.GetV1Service().EditComment)      //edit a comment
+			commentGroup.DELETE("/:commentId", obj.GetV1Service().DeleteComment) //delete a comment
+			commentGroup.GET("/:commentId", obj.GetV1Service().GetComment)       //fetch a comment info
+			commentGroup.GET("", obj.GetV1Service().GetAllComment)               //fetch all comments based on post id
 		}
 
 		//vote group
