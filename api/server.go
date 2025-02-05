@@ -2,19 +2,39 @@ package api
 
 import (
 	"context"
+	"liquide-assignment/pkg/db"
+	e "liquide-assignment/pkg/errors"
 	"liquide-assignment/pkg/service"
 	"log"
 	"net/http"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 var srv *http.Server
 var ctx context.Context
+var databases []*gorm.DB
 
 func Start() error {
 	ctx = context.Background()
 
-	serviceObj := service.NewServiceGroupObject()
+	//error initialization
+	e.ErrorInit()
+
+	databases = make([]*gorm.DB, 0)
+	postgresConn, err := db.PsqlConnect()
+	if err != nil {
+		log.Printf("Failed to connect psql database. Error:%s", err.Error())
+		return err
+	}
+
+	//extend the list of databases if multiple db connections needed
+	databases = append(databases, postgresConn)
+	dbObj := db.NewDBObject(postgresConn)
+
+	//pass db object to service layer
+	serviceObj := service.NewServiceGroupObject(dbObj)
 	startRouter(serviceObj)
 	return nil
 }

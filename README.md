@@ -9,3 +9,12 @@ There are a few assumptions and borders drawn around the application in the inte
 
 ## postman-collection
 https://dark-station-154939.postman.co/workspace/Liquide-Assignment~bb764463-0583-4784-8c62-78b3cc1f5fd9/collection/32061457-f46f94fd-310e-4346-a873-1ceae92587bd?action=share&creator=32061457
+
+## Getting Started
+
+To get started to be using this project, the pre-requisites would be needed
+
+### Prerequisites
+- Go 1.20+
+- Docker (optional, for containerization and/or database)
+- make installation
