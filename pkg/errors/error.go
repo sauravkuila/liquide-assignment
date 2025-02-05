@@ -1,6 +1,7 @@
 package errors
 
 import (
+	"fmt"
 	"log"
 )
 
@@ -46,7 +47,11 @@ func (e *Error) Error() string {
 	if e == nil {
 		return "UndefinedError"
 	}
-	return e.ErrName
+	return " | " + fmt.Sprintf("%d", e.Code) + " : " + e.ErrName + " | " + e.Description
+}
+
+func Native(err Error) error {
+	return &err
 }
 
 func (e *Error) GetErrorDetails(errMsg string) Error {

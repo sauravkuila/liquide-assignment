@@ -13,5 +13,12 @@ func getRouter(obj service.ServiceGroupLayer) *gin.Engine {
 	// Health check API can be used for the Kubernetes pod health
 	router.GET("/health", obj.Health)
 
+	//cred APIs
+	onboardingGroup := router.Group("onboarding")
+	{
+		onboardingGroup.POST("signup", obj.GetOnboardingService().UserSignup) //signup as user or admin
+		onboardingGroup.POST("login", obj.GetOnboardingService().UserLogin)   //login for user / admin
+	}
+
 	return router
 }

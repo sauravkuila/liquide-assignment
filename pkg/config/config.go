@@ -10,6 +10,13 @@ var (
 	config *viper.Viper
 )
 
+const (
+	USERID        = "userId"
+	USERTYPE      = "userType"
+	USERNAME      = "username"
+	AUTHORIZATION = "Authorization"
+)
+
 // Init is an exported method that takes the environment starts the viper
 // (external lib) and returns the configuration struct.
 func Load(env string, configPaths ...string) {
