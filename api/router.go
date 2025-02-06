@@ -34,7 +34,7 @@ func getRouter(obj service.ServiceGroupLayer) *gin.Engine {
 			postGroup.PUT("", obj.GetV1Service().EditPost)              //edit a post
 			postGroup.DELETE("/:postId", obj.GetV1Service().DeletePost) //delete a post
 			postGroup.GET("/:postId", obj.GetV1Service().GetPost)       //fetch a post info
-			postGroup.GET("", obj.GetV1Service().GetAllPosts)           //fetch all posts
+			postGroup.GET("", obj.GetV1Service().GetAllPostsForUser)    //fetch all posts
 		}
 
 		//comment group

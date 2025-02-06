@@ -15,7 +15,7 @@ type PostServiceInterface interface {
 	EditPost(*gin.Context)
 	DeletePost(*gin.Context)
 	GetPost(*gin.Context)
-	GetAllPosts(*gin.Context)
+	GetAllPostsForUser(*gin.Context)
 }
 
 func NewPostService(db db.DBLayer) PostServiceInterface {

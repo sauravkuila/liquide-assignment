@@ -37,6 +37,31 @@ type DbPost struct {
 	UpdatedAt sql.NullTime
 }
 
+type DbPostInfo struct {
+	PostId       sql.NullInt64
+	UserId       sql.NullInt64
+	Content      sql.NullString
+	UserName     sql.NullString
+	UpVote       sql.NullInt64
+	DownVote     sql.NullInt64
+	CommentCount sql.NullInt64
+	IsDeleted    sql.NullBool
+	CreatedAt    sql.NullTime
+	UpdatedAt    sql.NullTime
+}
+
+func (p *DbPostInfo) ToPostInfo() PostInfo {
+	return PostInfo{
+		PostId:        p.PostId.Int64,
+		Content:       p.Content.String,
+		UserName:      p.UserName.String,
+		UpVoteCount:   p.UpVote.Int64,
+		DownVoteCount: p.DownVote.Int64,
+		CreatedAt:     p.CreatedAt.Time.Format("2006-01-02 15:04:05"),
+		UpdatedAt:     p.UpdatedAt.Time.Format("2006-01-02 15:04:05"),
+	}
+}
+
 type DbComment struct {
 	CommentId       sql.NullInt64
 	PostId          sql.NullInt64
