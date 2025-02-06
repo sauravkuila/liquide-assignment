@@ -47,3 +47,12 @@ type DbComment struct {
 	CreatedAt       sql.NullTime
 	UpdatedAt       sql.NullTime
 }
+
+type DbVote struct {
+	VoteId    sql.NullInt64
+	PostId    sql.NullInt64
+	UserId    sql.NullInt64
+	VoteType  sql.NullBool
+	CreatedAt sql.NullTime
+	UpdatedAt sql.NullTime
+}
