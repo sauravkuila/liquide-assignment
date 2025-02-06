@@ -26,6 +26,11 @@ func getRouter(obj service.ServiceGroupLayer) *gin.Engine {
 	//v1 APIs
 	v1Group := router.Group("v1")
 	{
+		//feed group
+		feedGroup := v1Group.Group("feed")
+		{
+			feedGroup.GET("", obj.GetV1Service().GetFeed) //get feed
+		}
 
 		//post group
 		postGroup := v1Group.Group("post")

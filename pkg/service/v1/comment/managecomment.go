@@ -2,6 +2,7 @@ package comment
 
 import (
 	"database/sql"
+	"liquide-assignment/pkg/blog"
 	"liquide-assignment/pkg/config"
 	"liquide-assignment/pkg/dto"
 	"log"
@@ -40,6 +41,14 @@ func (obj *commentService) CreateComment(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
+
+	//update the blog package about the comment
+	go blog.NewBlogObject(obj.redisObj).AddComment(c, dto.Comment{
+		CommentId: commentId,
+		PostId:    request.PostId,
+		UserId:    c.GetInt64(config.USERID),
+		Content:   request.Content,
+	})
 
 	response.Status = true
 	response.Data = &dto.Comment{

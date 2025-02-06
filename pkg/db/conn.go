@@ -1,10 +1,12 @@
 package db
 
 import (
+	"context"
 	"fmt"
 	"liquide-assignment/pkg/config"
 	"log"
 
+	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -34,4 +36,22 @@ func PsqlConnect() (*gorm.DB, error) {
 
 	log.Println("Postgres Database Connected")
 	return dbc, nil
+}
+
+func RedisConnect() (*redis.Client, error) {
+	c := config.GetConfig()
+
+	// Initialize Redis client.
+	redisClient := redis.NewClient(&redis.Options{
+		Addr: c.GetString("databases.redis.host") + ":" + c.GetString("databases.redis.port"), // Adjust if your Redis is hosted elsewhere.
+	})
+
+	//check connection
+	pong, err := redisClient.Ping(context.TODO()).Result()
+	if err != nil {
+		return nil, err
+	}
+	log.Println("redis connected. result: ", pong)
+
+	return redisClient, nil
 }

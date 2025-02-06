@@ -33,8 +33,15 @@ func Start() error {
 	databases = append(databases, postgresConn)
 	dbObj := db.NewDBObject(postgresConn)
 
+	//connect to redis
+	redisConn, err := db.RedisConnect()
+	if err != nil {
+		log.Printf("Failed to connect redis. Error:%s", err.Error())
+		return err
+	}
+
 	//pass db object to service layer
-	serviceObj := service.NewServiceGroupObject(dbObj)
+	serviceObj := service.NewServiceGroupObject(dbObj, redisConn)
 	startRouter(serviceObj)
 	return nil
 }

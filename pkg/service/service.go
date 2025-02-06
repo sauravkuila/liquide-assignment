@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 )
 
 type service struct {
@@ -20,10 +21,10 @@ type ServiceGroupLayer interface {
 	GetV1Service() v1.V1ServiceInterface
 }
 
-func NewServiceGroupObject(db db.DBLayer) ServiceGroupLayer {
+func NewServiceGroupObject(db db.DBLayer, redisConn *redis.Client) ServiceGroupLayer {
 	return &service{
 		onboardingService: onboarding.NewOnboardingService(db),
-		v1Service:         v1.NewServiceObject(db),
+		v1Service:         v1.NewServiceObject(db, redisConn),
 	}
 }
 

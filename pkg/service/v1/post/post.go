@@ -4,10 +4,12 @@ import (
 	"liquide-assignment/pkg/db"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 )
 
 type postService struct {
-	dbObj db.DBLayer
+	dbObj    db.DBLayer
+	redisObj *redis.Client
 }
 
 type PostServiceInterface interface {
@@ -18,8 +20,9 @@ type PostServiceInterface interface {
 	GetAllPostsForUser(*gin.Context)
 }
 
-func NewPostService(db db.DBLayer) PostServiceInterface {
+func NewPostService(db db.DBLayer, redisConn *redis.Client) PostServiceInterface {
 	return &postService{
-		dbObj: db,
+		dbObj:    db,
+		redisObj: redisConn,
 	}
 }

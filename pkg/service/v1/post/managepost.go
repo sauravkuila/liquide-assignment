@@ -2,6 +2,7 @@ package post
 
 import (
 	"database/sql"
+	"liquide-assignment/pkg/blog"
 	"liquide-assignment/pkg/config"
 	"liquide-assignment/pkg/dto"
 	"log"
@@ -39,6 +40,13 @@ func (obj *postService) CreatePost(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
+
+	//update the blog about post creation
+	go blog.NewBlogObject(obj.redisObj).AddPost(c, dto.Post{
+		PostId:  postId,
+		UserId:  c.GetInt64(config.USERID),
+		Content: request.Content,
+	})
 
 	response.Status = true
 	response.Data = &dto.Post{

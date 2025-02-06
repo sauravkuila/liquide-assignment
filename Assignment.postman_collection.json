@@ -1,0 +1,652 @@
+{
+	"info": {
+		"_postman_id": "f46f94fd-310e-4346-a873-1ceae92587bd",
+		"name": "Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32061457",
+		"_collection_link": "https://dark-station-154939.postman.co/workspace/Liquide-Assignment~bb764463-0583-4784-8c62-78b3cc1f5fd9/collection/32061457-f46f94fd-310e-4346-a873-1ceae92587bd?action=share&source=collection_link&creator=32061457"
+	},
+	"item": [
+		{
+			"name": "Onboarding",
+			"item": [
+				{
+					"name": "Onboarding - Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.be.oneOf([201,202,200]);",
+									"  const responseJson = pm.response.json();",
+									"  token = responseJson.data.token  ",
+									"    pm.collectionVariables.set(\"token\", token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"John\",\n    \"password\":\"pass123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/onboarding/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"onboarding",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Onboarding - Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"saurav\",\n    \"password\":\"pass12345\",\n\t\"type\":\"ADMIN\",\n    \"email\":\"abc@my.com\",\n    \"mobile\":\"+91802134589\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/onboarding/signup",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"onboarding",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Onboarding - Signup - User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"Saurav\",\n    \"password\":\"pass12345\",\n\t\"type\":\"USER\",\n    \"email\":\"abc@my.com\",\n    \"mobile\":\"+91802134589\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/onboarding/signup",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"onboarding",
+										"signup"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Onboarding - Signup - Admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"Paras\",\n    \"password\":\"pass12345\",\n\t\"type\":\"ADMIN\",\n    \"email\":\"abc@my.com\",\n    \"mobile\":\"+91802134589\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/onboarding/signup",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"onboarding",
+										"signup"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "V1",
+			"item": [
+				{
+					"name": "Posts",
+					"item": [
+						{
+							"name": "V1 - Post - Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\":\"My first post!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/post",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Post - Modify",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\":1,\n    \"content\":\"My first post update!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/post",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Post - Info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1/post/:postId",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"post",
+										":postId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Post - All User Posts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1/post?page=1&pageSize=10",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"post"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Post - Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1/post/:postId",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"post",
+										":postId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "V1 - Comment - Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\":1,\n    \"content\":\"My first comment!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/comment/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"comment",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Comment - Modify",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"commentId\":1,\n    \"content\":\"My first comment update!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/comment",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Reply - Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\":1,\n    \"parentCommentId\":1,\n    \"content\":\"My first reply!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/comment/reply",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"comment",
+										"reply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Comment - Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1/comment/:commentId",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"comment",
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "commentId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vote",
+					"item": [
+						{
+							"name": "V1 - Vote - UpVote",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/vote/up",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"vote",
+										"up"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "V1 - Vote - DownVote",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1/vote/down",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1",
+										"vote",
+										"down"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "V1 - Feed - Dynamic Score",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/feed",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"feed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/health",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "127.0.0.1:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

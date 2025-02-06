@@ -2,6 +2,7 @@ package vote
 
 import (
 	"database/sql"
+	"liquide-assignment/pkg/blog"
 	"liquide-assignment/pkg/config"
 	"liquide-assignment/pkg/dto"
 	"log"
@@ -42,6 +43,14 @@ func (obj *voteService) UpVote(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
+
+	//update the blog package about the vote
+	go blog.NewBlogObject(obj.redisObj).AddVote(c, dto.Vote{
+		PostId:   request.PostId,
+		UserId:   c.GetInt64(config.USERID),
+		VoteId:   voteId,
+		VoteType: "upvote",
+	})
 
 	response.Status = true
 	response.Data = &dto.Vote{
@@ -87,6 +96,14 @@ func (obj *voteService) DownVote(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
+
+	//update the blog package about the vote
+	go blog.NewBlogObject(obj.redisObj).AddVote(c, dto.Vote{
+		PostId:   request.PostId,
+		UserId:   c.GetInt64(config.USERID),
+		VoteId:   voteId,
+		VoteType: "downvote",
+	})
 
 	response.Status = true
 	response.Data = &dto.Vote{
