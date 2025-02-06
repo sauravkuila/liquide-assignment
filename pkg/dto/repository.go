@@ -36,3 +36,14 @@ type DbPost struct {
 	CreatedAt sql.NullTime
 	UpdatedAt sql.NullTime
 }
+
+type DbComment struct {
+	CommentId       sql.NullInt64
+	PostId          sql.NullInt64
+	UserId          sql.NullInt64
+	ParentCommentId sql.NullInt64
+	Content         sql.NullString
+	IsDeleted       sql.NullBool
+	CreatedAt       sql.NullTime
+	UpdatedAt       sql.NullTime
+}

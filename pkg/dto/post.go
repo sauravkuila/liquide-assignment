@@ -26,3 +26,13 @@ type DeletePostResponse struct {
 	Data *Post `json:"data,omitempty"`
 	CommonResponse
 }
+
+type EditPostRequest struct {
+	PostId  int64  `json:"postId" binding:"required"`
+	Content string `json:"content" binding:"required"`
+}
+
+type EditPostResponse struct {
+	Data *Post `json:"data,omitempty"`
+	CommonResponse
+}

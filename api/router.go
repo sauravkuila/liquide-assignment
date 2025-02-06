@@ -31,7 +31,7 @@ func getRouter(obj service.ServiceGroupLayer) *gin.Engine {
 		postGroup := v1Group.Group("post")
 		{
 			postGroup.POST("", obj.GetV1Service().CreatePost)           //create post
-			postGroup.PUT("/:postId", obj.GetV1Service().EditPost)      //edit a post
+			postGroup.PUT("", obj.GetV1Service().EditPost)              //edit a post
 			postGroup.DELETE("/:postId", obj.GetV1Service().DeletePost) //delete a post
 			postGroup.GET("/:postId", obj.GetV1Service().GetPost)       //fetch a post info
 			postGroup.GET("", obj.GetV1Service().GetAllPosts)           //fetch all posts
@@ -41,7 +41,9 @@ func getRouter(obj service.ServiceGroupLayer) *gin.Engine {
 		commentGroup := v1Group.Group("comment")
 		{
 			commentGroup.POST("", obj.GetV1Service().CreateComment)              //create comment
-			commentGroup.PUT("/:commentId", obj.GetV1Service().EditComment)      //edit a comment
+			commentGroup.POST("/reply", obj.GetV1Service().ReplyComment)         //create comment
+			commentGroup.GET("/reply", obj.GetV1Service().GetAllReplies)         //get all replies for a comment
+			commentGroup.PUT("", obj.GetV1Service().EditComment)                 //edit a comment
 			commentGroup.DELETE("/:commentId", obj.GetV1Service().DeleteComment) //delete a comment
 			commentGroup.GET("/:commentId", obj.GetV1Service().GetComment)       //fetch a comment info
 			commentGroup.GET("", obj.GetV1Service().GetAllComment)               //fetch all comments based on post id

@@ -12,6 +12,8 @@ type commentService struct {
 
 type CommentServiceInterface interface {
 	CreateComment(*gin.Context)
+	ReplyComment(*gin.Context)
+	GetAllReplies(*gin.Context)
 	EditComment(*gin.Context)
 	DeleteComment(*gin.Context)
 	GetComment(*gin.Context)

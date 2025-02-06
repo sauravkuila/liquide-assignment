@@ -22,7 +22,7 @@ func (obj *postDb) CreatePost(ctx context.Context, post dto.DbPost) (int64, erro
 	var postId sql.NullInt64
 	insertTx := obj.dbObj.WithContext(ctx).Raw(query, post.UserId.Int64, post.Content.String).Scan(&postId)
 	if insertTx.Error != nil {
-		log.Println("error in adding user")
+		log.Println("error in creating post")
 		return 0, insertTx.Error
 	}
 
@@ -33,7 +33,7 @@ func (obj *postDb) UpdatePost(ctx context.Context, post dto.DbPost) (int64, erro
 	query := `
 		update post
 		set content = ?
-		where post_id = ? and user_id = ?
+		where post_id = ? and user_id = ? and is_deleted = FALSE
 		returning post_id;
 	`
 
@@ -46,6 +46,10 @@ func (obj *postDb) UpdatePost(ctx context.Context, post dto.DbPost) (int64, erro
 		}
 		return 0, updateTx.Error
 	}
+	if updateTx.RowsAffected == int64(0) {
+		return 0, gorm.ErrRecordNotFound
+	}
+	updateTx.Commit()
 
 	return postId.Int64, nil
 }
